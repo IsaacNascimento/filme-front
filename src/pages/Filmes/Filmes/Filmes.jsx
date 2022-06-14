@@ -31,32 +31,9 @@ export const Filmes = () => {
   return (
     <div>
       <h1>Filmes</h1>
-      <Row className="mb-5 mt-5">
-        {movies.map((item) => (
-          <Col key={item.id} sm={6} md={4} lg={3} className="mb-3 mr-3">
-            <Card
-              className="h-100 my-5 mr-2 text-decoration-none"
-              style={{ heigh: "18rem", width: "18rem" }}
-            >
-              <Link to={"/filmes/" + item.id}>
-                {item.ulrFoto && (
-                  <Card.Img
-                    className="h-100"
-                    variant="top"
-                    src={item.ulrFoto}
-                  />
-                )}
-              </Link>
-              <Card.Body>
-                <Card.Title>
-                  {item.nome}
-                  
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+
+      <Link to="/create/filmes" >Novo filme</Link>
+
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -86,7 +63,7 @@ export const Filmes = () => {
           ))}
         </tbody>
       </Table>
-      <Link to="/create/filmes">Novo filme</Link>
+    
     </div>
   );
 };

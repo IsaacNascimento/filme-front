@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import { FaCheck } from "react-icons/fa";
 import { BsArrowLeft } from "react-icons/bs";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import ElencoService from "../../../services/crud/ElencoService";
-import { ElencoValidator } from "../../../services/validators/elencoValidator";
+import CategoriaService from "../../../services/crud/CategoriaService";
+import { CategoriaValidator } from "../../../services/validators/CategoriaValidator";
 
-export const ElencoDetalhes = () => {
+export const CatagoriaDetalhes = () => {
   const params = useParams();
   const navigate = useNavigate();
   const {
@@ -19,45 +19,36 @@ export const ElencoDetalhes = () => {
 
   useEffect(() => {
     if (params.id) {
-      ElencoService.get(params.id).then((result) => {
-        const elenco = result.data;
-      for (let campo in elenco) {
-        setValue(campo, elenco[campo]);
-      }
-    });
+      CategoriaService.get(params.id).then((result) => {
+        const categoria = result.data;
+        console.log(categoria);
+        for (let campo in categoria) {
+          setValue(campo, categoria[campo]);
+        }
+      });
     }
   }, []);
 
   const salvar = (dados) => {
     if (params.id) {
-      ElencoService.update(params.id, dados);
+      CategoriaService.update(params.id, dados);
     } else {
-      ElencoService.create(dados);
+      CategoriaService.create(dados);
     }
-    navigate("/elencos");
+    navigate("/categorias");
   };
 
   return (
     <div>
-      <h1>ElencoDetalhes</h1>
+      <h1>Categoria Detalhes</h1>
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Nome: </Form.Label>
           <Form.Control
             type="text"
-            {...register("nome", ElencoValidator.nome)}
+            {...register("nome", CategoriaValidator.nome)}
           />
-          {errors.nome && (
-            <span className="text-danger">{errors.nome.message}</span>
-          )}
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Biografia: </Form.Label>
-          <Form.Control
-            type="text"
-            {...register("biografia", ElencoValidator.biografia)}
-          />
-          {errors.nome && (
+           {errors.nome && (
             <span className="text-danger">{errors.nome.message}</span>
           )}
         </Form.Group>

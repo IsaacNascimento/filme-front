@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { RiDeleteBin6Fill, RiPencilFill } from "react-icons/ri";
+import FilmeClienteService from "../../../services/crud/FlimeClinteService";
 import FilmeService from "../../../services/crud/FilmeService";
 
-export const Filmes = () => {
+export const FilmeClientes = () => {
   const [movies, setMovies] = useState([]);
+  const [filmeCliente, setFilmeCliente] = useState([]);
+  console.log(filmeCliente);
 
   const renderAll = async () => {
     await FilmeService.getAll().then((result) => {
@@ -13,44 +16,52 @@ export const Filmes = () => {
     });
   };
 
+  const getAllFilmeCliente = () => {
+    FilmeClienteService.getAll().then((results) => {
+      setFilmeCliente(results.data.data);
+    });
+  };
+
+  useEffect(() => {
+    getAllFilmeCliente();
+    renderAll();
+  }, []);
+
   const remove = async (id) => {
     if (window.confirm("Tem certeza que você quer apagar?")) {
       try {
-        await FilmeService.delete(id);
-        renderAll();
+        await FilmeClienteService.delete(id);
+        getAllFilmeCliente();
       } catch (e) {
         console.info(e);
       }
     }
   };
 
-  useEffect(() => {
-    renderAll();
-  }, []);
-
   return (
     <div>
-      <h1>Filmes</h1>
-
-      <Link className='btn btn-info mb-3' to="/create/filmes" >Novo filme</Link>
-
+      <h1>Filmes & Clientes</h1>
+      <Link className="btn btn-info mb-3" to="/create/filmes/clientes">
+        {" "}
+        Novo Filme & Cliente
+      </Link>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#ID</th>
-            <th>Filme</th>
-            <th>Descrição</th>
+            <th>ID</th>
+            <th>Filme id</th>
+            <th>Cliente id</th>
             <th>Ação</th>
           </tr>
         </thead>
         <tbody>
-          {movies.map((item) => (
+          {filmeCliente.map((item) => (
             <tr key={item.id}>
               <td>{item.id}</td>
-              <td>{item.nome}</td>
-              <td>{item?.descricao}</td>
+              <td>{item.filme_id}</td>
+              <td>{item.cliente_id}</td>
               <td>
-                <Link to={"/filmes/" + item.id}>
+                <Link to={"/filmes/clientes/" + item.id}>
                   {" "}
                   <RiPencilFill className="text-dark" />
                 </Link>
@@ -63,7 +74,6 @@ export const Filmes = () => {
           ))}
         </tbody>
       </Table>
-    
     </div>
   );
 };

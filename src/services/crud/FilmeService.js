@@ -1,5 +1,5 @@
 import { ApiFilme } from "../ApiFilme";
-''
+
 class FilmeService {
     getAll() {
         return ApiFilme.get('filmes');

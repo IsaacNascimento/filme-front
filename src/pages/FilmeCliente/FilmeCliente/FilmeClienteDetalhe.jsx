@@ -4,10 +4,9 @@ import { useForm } from "react-hook-form";
 import { FaCheck } from "react-icons/fa";
 import { BsArrowLeft } from "react-icons/bs";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import ElencoService from "../../../services/crud/ElencoService";
-import { ElencoValidator } from "../../../services/validators/elencoValidator";
+import FilmeClienteService from "../../../services/crud/FlimeClinteService";
 
-export const ElencoDetalhes = () => {
+export const FilmeClienteDetalhe = () => {
   const params = useParams();
   const navigate = useNavigate();
   const {
@@ -19,47 +18,42 @@ export const ElencoDetalhes = () => {
 
   useEffect(() => {
     if (params.id) {
-      ElencoService.get(params.id).then((result) => {
-        const elenco = result.data;
-      for (let campo in elenco) {
-        setValue(campo, elenco[campo]);
-      }
-    });
+      FilmeClienteService.get(params.id).then((result) => {
+        const cliente = result.data;
+        console.log(cliente);
+        for (let campo in cliente) {
+          setValue(campo, cliente[campo]);
+        }
+      });
     }
   }, []);
 
   const salvar = (dados) => {
     if (params.id) {
-      ElencoService.update(params.id, dados);
+      FilmeClienteService.update(params.id, dados);
     } else {
-      ElencoService.create(dados);
+      FilmeClienteService.create(dados);
     }
-    navigate("/elencos");
+    navigate("/filmes/clientes");
   };
 
   return (
     <div>
-      <h1>ElencoDetalhes</h1>
+      <h1>Filme && Cliente Detalhes</h1>
       <Form>
         <Form.Group className="mb-3">
-          <Form.Label>Nome: </Form.Label>
+          <Form.Label>Filme id: </Form.Label>
           <Form.Control
             type="text"
-            {...register("nome", ElencoValidator.nome)}
+            {...register("filme_id",)}
           />
-          {errors.nome && (
-            <span className="text-danger">{errors.nome.message}</span>
-          )}
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Biografia: </Form.Label>
+          <Form.Label>Cliente id: </Form.Label>
           <Form.Control
             type="text"
-            {...register("biografia", ElencoValidator.biografia)}
+            {...register("cliente_id",)}
           />
-          {errors.nome && (
-            <span className="text-danger">{errors.nome.message}</span>
-          )}
         </Form.Group>
         <div className="text-center">
           <Button onClick={handleSubmit(salvar)} className="btn btn-success">

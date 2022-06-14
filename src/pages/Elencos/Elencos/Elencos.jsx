@@ -32,37 +32,36 @@ export const Elencos = () => {
   return (
     <div>
       <h1>Elencos</h1>
-      <Row className="mb-5 mt-5">
-        {elenco?.map((item) => (
-          <Col key={item.id} sm={6} md={4} lg={3} className="mb-3 mr-3">
-            <Card
-              className="h-100 my-5 mr-2 text-decoration-none"
-              style={{ heigh: "18rem", width: "18rem" }}
-            >
-              <Link to={"/elencos/" + item.id}>
-                {item.urlFoto && (
-                  <Card.Img
-                    className="h-100"
-                    variant="top"
-                    src={item.urlFoto}
-                  />
-                )}
-              </Link>
-              <Card.Body>
-                <Card.Title>{item.nome}
-             
+      <Link className='btn btn-info mb-3' to="/create/elenco"> Novo elenco</Link>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#ID</th>
+            <th>Filme</th>
+            <th>Biografia</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          {elenco.map((item) => (
+            <tr key={item.id}>
+              <td>{item.id}</td>
+              <td>{item.nome}</td>
+              <td>{item.biografia}</td>
+              <td>
+                <Link to={"/elencos/" + item.id}>
                   {" "}
-                  <RiDeleteBin6Fill
-                    className="text-danger"
-                    onClick={() => remove(item.id)}
-                    />
-                    </Card.Title>
-             
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+                  <RiPencilFill className="text-dark" />
+                </Link>
+                <RiDeleteBin6Fill
+                  className="text-danger"
+                  onClick={() => remove(item.id)}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 };

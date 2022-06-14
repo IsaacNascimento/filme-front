@@ -11,7 +11,7 @@ class ElencoFilme {
         return ApiFilme.post('elencos', dados);
     }
     update(id, dados){
-        return ApiFilme.update('elencos/' + id, dados)
+        return ApiFilme.put('elencos/' + id, dados)
     }
     delete(id){
         return ApiFilme.delete('/elencos/' + id);

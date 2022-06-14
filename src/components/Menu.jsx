@@ -18,8 +18,9 @@ export const Menu = () => {
           </Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/elencos">Elenco</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link href="/clientes">Cliente</Nav.Link>
+            <Nav.Link href="/filmes/clientes">Filmes & Clientes</Nav.Link>
+            <Nav.Link href="/categorias">Categorias</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
